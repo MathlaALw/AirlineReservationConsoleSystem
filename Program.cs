@@ -63,7 +63,10 @@
                         DisplayAllFlights();  
                         break;
                     case 3:
-                        //FindFlightByCode();
+
+                        Console.Write("Enter flight code : ");
+                        string code = Console.ReadLine().ToLower();
+                        FindFlightByCode(code);
                         break;
                     case 4:
                         //UpdateFlightDeparture();
@@ -261,6 +264,68 @@
 
         public static void FindFlightByCode(string code)
         {
+          
+            
+
+            bool found; 
+            do 
+            {
+
+                
+                
+                found = false; 
+                if (FlightCounter == 0) 
+                {
+                    Console.WriteLine("No student record found.");
+                    found = false;
+                    break;
+
+                }
+                else if (string.IsNullOrWhiteSpace(code))
+                {
+                    Console.WriteLine("Name cannot be empty. Please try again.");
+                    found = false;
+
+                }
+
+                else if (int.TryParse(code, out int result))
+                {
+                    Console.WriteLine("Invalid input! Please enter a string");
+                }
+
+                else 
+                {
+
+
+                    for (int i = 0; i < FlightCounter; i++) 
+                    {
+                        string lowerCode = flight_Code[i].ToLower();
+
+                        if (lowerCode == code) 
+                        {
+                            Console.WriteLine( "Flight Code : " + flight_Code[i]);
+                            Console.WriteLine("From City : " + from_City[i]);
+                            Console.WriteLine("To City : " + to_City[i]);
+                            Console.WriteLine("Departure Time : " + departure_Time[i]);
+                            Console.WriteLine("Flight Duration : " + flight_duration[i]);
+                            Console.WriteLine("\n");
+                            found = true;
+                            break;
+                        }
+
+
+                    }
+                }
+                if (!found) 
+                {
+                    Console.WriteLine("Not found. Try again.");
+                }
+
+            } while (!found);
+
+            Console.WriteLine("Press any key to continue...");
+            Console.Clear();
+            StartSystem();
 
         }
 
