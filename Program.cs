@@ -10,14 +10,14 @@ namespace AirlineReservationConsoleSystem
         public static int FlightCounter = 0;
         public static int maxSeats = 20;
         public static int maxBooking = 20;
-        //public static int basePrice =120 ;
+        
         public static string flightCode = "";
         public static string passengerName = "";
         public static string[] booking_Id = new string[3];
         public static double[] base_Price = new double[3];
         public static double[] total_Fare = new double[3];
         public static int[] num_Tickets = new int[3];
-        public static string[] seats = new string[3];
+        //public static string[] seats = new string[3];
         public static string[] bookingFlight = new string[3];
         public static string[] flight_Code = new string[3];
         public static string[] from_City = new string[3];
@@ -27,6 +27,20 @@ namespace AirlineReservationConsoleSystem
         public static string[] passenger_Name = new string[3];
         public static DateTime departure;
         public static int numTickets;
+        //---------- List ----------------------------
+
+        public static List<string> booking_Id1 = new List<string>();
+        public static List<double> base_Price1 = new List<double>();
+        public static List<double> total_Fare1 = new List<double>();
+        public static List<int> num_Tickets1 = new List<int>();
+        //public static string[] seats = new string[3];
+        public static List<string> bookingFlight1 = new List<string>();
+        public static List<string> flight_Code1 = new List<string>();
+        public static List<string> from_City1 = new List<string>();
+        public static List<string> to_City1 = new List<string>();
+        public static List<DateTime> departure_Time1 = new List<DateTime>();
+        public static List<int> flight_duration1 = new List<int>();
+        public static List<string> passenger_Name1 = new List<string>();
 
         static void Main(string[] args)
         {
@@ -35,12 +49,12 @@ namespace AirlineReservationConsoleSystem
             StartSystem();
         }
 
-
+        // Display welcome message
         public static void DisplayWelcomeMessage()
         {
             Console.WriteLine("Welcome to the Airline Reservation System!");
         }
-
+        // Show main menu
         public static int ShowMainMenu()
         {
             Console.WriteLine("\nAdmin Menu:");
@@ -60,6 +74,7 @@ namespace AirlineReservationConsoleSystem
             int choice = int.Parse(Console.ReadLine());
             return choice;
         }
+        // Display menu
         public static void StartSystem()
         {
 
@@ -165,14 +180,14 @@ namespace AirlineReservationConsoleSystem
             char doAgain;
             do
             {
-                Console.WriteLine("\n Enter Number of Flight to add:\n");
+                Console.WriteLine("Enter Number of Flight to add:\n");
                 int numberOfFlight = int.Parse(Console.ReadLine());
 
 
-
+                // Check if the number of flights to add is valid
                 if (numberOfFlight + FlightCounter <= maxFlight)
                 {
-
+                    // Add flights
                     for (int i = FlightCounter; i < FlightCounter + numberOfFlight; i++)
                     {
                         
@@ -362,7 +377,7 @@ namespace AirlineReservationConsoleSystem
 
             else
             {
-
+                // Display all flights
                 Console.WriteLine("Displaying all flights:");
                 for (int i = 0; i < FlightCounter; i++)
                 {
@@ -413,12 +428,12 @@ namespace AirlineReservationConsoleSystem
                 else
                 {
 
-
+                    
                     for (int i = 0; i < FlightCounter; i++)
                     {
-                        string lowerCode = flight_Code[i].ToLower();
+                        string lowerCode = flight_Code[i].ToLower(); // convert to lowercase
 
-                        if (lowerCode == code)
+                        if (lowerCode == code) // if code is found.
                         {
                             Console.WriteLine("\nFlight found:");
                             Console.WriteLine("Flight Code : " + flight_Code[i]);
@@ -449,7 +464,7 @@ namespace AirlineReservationConsoleSystem
         // Update flight departure time
         public static DateTime UpdateFlightDeparture(ref DateTime departure)
         {
-            for (int i = 0; i < FlightCounter; i++)
+            for (int i = 0; i < FlightCounter; i++) // show all flight details.
             {
                 Console.WriteLine("Flight Code : " + flight_Code[i]);
                 Console.WriteLine("From City : " + from_City[i]);
@@ -463,12 +478,12 @@ namespace AirlineReservationConsoleSystem
             string flightCode = Console.ReadLine();
             bool found = false;
 
-            for (int i = 0; i < FlightCounter; i++)
+            for (int i = 0; i < FlightCounter; i++) // loop through all flight details.
             {
-                if (flight_Code[i] == flightCode)
+                if (flight_Code[i] == flightCode) 
                 {
                     Console.WriteLine("Enter new Departure Time (yyyy-mm-dd hh:mm): ");
-                    DateTime newDeparture = DateTime.Parse(Console.ReadLine());
+                    DateTime newDeparture = DateTime.Parse(Console.ReadLine()); // read new departure time.
 
                     if (newDeparture < DateTime.Now)
                     {
@@ -476,6 +491,7 @@ namespace AirlineReservationConsoleSystem
                     }
                     else
                     {
+                        // Update the departure time
                         departure_Time[i] = newDeparture;
                         Console.WriteLine("Departure time updated successfully.");
                         departure = newDeparture;
@@ -502,20 +518,21 @@ namespace AirlineReservationConsoleSystem
         public static string CancelFlightBooking(out string passengerName)
         {
             passengerName = "";
-            for(int i = 0; i < FlightCounter; i++)
+            for(int i = 0; i < FlightCounter; i++) // show passenger details
             {
                 Console.WriteLine("Booking ID: " + booking_Id[i]);
                 Console.WriteLine("Passenger Name: " + passenger_Name[i]);
                 Console.WriteLine();
             }
             Console.Write("Enter booking ID to cancel flight booking: ");
-            string bookingId = Console.ReadLine().ToLower();
-            ConfirmAction(bookingId);
+            string bookingId = Console.ReadLine().ToLower(); //read booking ID
+            ConfirmAction(bookingId); // confirm action to cancel booking
 
             for (int i = 0; i < FlightCounter; i++)
             {
-                if (booking_Id[i]?.ToLower() == bookingId)
+                if (booking_Id[i].ToLower() == bookingId)
                 {
+                    // Cancel the booking
                     passengerName = passenger_Name[i];
                     passenger_Name[i] = "";
                     booking_Id[i] = "";
@@ -553,31 +570,31 @@ namespace AirlineReservationConsoleSystem
 
                         Console.WriteLine("Enter Number of Tickets:");
                         int numTickets = int.Parse(Console.ReadLine());
-                        double basePrice = base_Price[i];
-                        if (numTickets < maxSeats)
+                        double basePrice = base_Price[i]; // get base price of flight
+                        if (numTickets < maxSeats) 
                         {
                             bool found = false;
 
 
 
-                            Console.WriteLine("Do you have a discount? (yes/no):");
-                            string hasDiscount = Console.ReadLine().ToLower();
+                            Console.WriteLine("Do you have a discount? (yes/no):"); 
+                            string hasDiscount = Console.ReadLine().ToLower();// read if user has discount
 
                             double totalFare;
                             if (hasDiscount == "yes")
                             {
-                                Console.WriteLine("Enter Discount Percentage:");
-                                double discount = double.Parse(Console.ReadLine());
+                                Console.WriteLine("Enter Discount :");
+                                double discount = double.Parse(Console.ReadLine()); // read discount percentage
 
-                                totalFare = CalculateFare(basePrice, numTickets, discount);
+                                totalFare = CalculateFare(basePrice, numTickets, discount); // calculate fare with discount
                                 //total_Fare[i] = totalFare;
                             }
                             else
                             {
-                                totalFare = CalculateFare(basePrice, numTickets);
+                                totalFare = CalculateFare(basePrice, numTickets); // calculate fare without discount
                             }
 
-                            //return;
+                            // book the flight
                             maxSeats = maxSeats - numTickets;
                             passenger_Name[i] = passengerName;
                             booking_Id[i] = GenerateBookingID(passengerName);
@@ -596,8 +613,8 @@ namespace AirlineReservationConsoleSystem
                         
                     }
 
-                    Console.WriteLine($"Booking ID: {booking_Id[i]}");
-                    Console.WriteLine($"Total Fare: {total_Fare[i]:C}");
+                    //Console.WriteLine($"Booking ID: {booking_Id[i]}");
+                    //Console.WriteLine($"Total Fare: {total_Fare[i]:C}");
                     Console.WriteLine("Flight booked successfully.");
                     Console.WriteLine();
                     Console.WriteLine("Press any key to continue...");
@@ -621,11 +638,11 @@ namespace AirlineReservationConsoleSystem
                 if (flight_Code[i] == flightCode)
                 {
                    
-                    return true;
+                    return true; // return true if flight code is found
                 }
                
             }
-            return false; 
+            return false; // return false if flight code is not found
 
         }
         // Generate booking ID
@@ -635,7 +652,7 @@ namespace AirlineReservationConsoleSystem
             Random random = new Random();
             int randomInt = random.Next(1000, 9999);
             string bookingId;
-            bookingId = passengerName + randomInt;
+            bookingId = passengerName + randomInt; 
             
 
             return bookingId;
@@ -654,7 +671,7 @@ namespace AirlineReservationConsoleSystem
             else
             {
 
-               
+                // display all flight details
                 Console.WriteLine("--------View booking flight-----------");
                 for (int i = 0; i < FlightCounter; i++)
                 {
@@ -691,11 +708,12 @@ namespace AirlineReservationConsoleSystem
         {
             bool found = false;
 
-            Console.WriteLine("Searching bookings for destination: " + toCity);
+            Console.WriteLine("Searching bookings for destination: " + toCity); 
             for (int i = 0; i < FlightCounter; i++)
             {
                 if (to_City[i].ToLower() == toCity.ToLower())
                 {
+                    // Display booking details
                     found = true;
                     Console.WriteLine("Flight Code: " + flight_Code[i]);
                     Console.WriteLine("Passenger Name: " + passenger_Name[i]);
@@ -710,15 +728,21 @@ namespace AirlineReservationConsoleSystem
             }
         }
         // Calculate fare int 
-        public static int CalculateFare(int basePrice, int numTickets, int discount)
+        public static int CalculateFare(int basePrice, int numTickets)
         {
+            // calculate fare with discount
+            for (int i = 0; i < FlightCounter; i++)
+            {
+                base_Price[i] = basePrice;
+            }
             int totalPrice = basePrice * numTickets;
-            int discountAmount = (totalPrice * discount) / 100;
-            return totalPrice - discountAmount;
+           
+            return totalPrice;
         }
         // Calculate fare double/int
         public static double CalculateFare(double basePrice, int numTickets)
         {
+            // calculate fare double/int
             for (int i = 0; i < FlightCounter; i++)
             {
                 base_Price[i] = basePrice;
