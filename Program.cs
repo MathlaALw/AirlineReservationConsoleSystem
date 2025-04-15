@@ -367,6 +367,210 @@ namespace AirlineReservationConsoleSystem
 
 
         }
+        // list add flight
+        public static void AddFlight1(string flightCode, string fromCity, string toCity, DateTime departureTime, int duration, double basePrice)
+        {
+
+
+            char doAgain;
+            do
+            {
+                Console.WriteLine("Enter Number of Flight to add:\n");
+                int numberOfFlight = int.Parse(Console.ReadLine());
+
+
+                // Check if the number of flights to add is valid
+                if (numberOfFlight + FlightCounter <= maxFlight)
+                {
+                    // Add flights
+                    for (int i = FlightCounter; i < FlightCounter + numberOfFlight; i++)
+                    {
+
+                        bool found = false;
+                        do
+                        {
+
+                            Console.WriteLine("Enter flight Code : ");
+                            flight_Code[i] = Console.ReadLine();
+                            
+                            flightCode = flight_Code[i].ToString();
+                            //flight_Code1.Add(flightCode);
+
+                            if (string.IsNullOrWhiteSpace(flightCode))
+                            {
+                                Console.WriteLine("Flight Code cannot be empty. Please try again.");
+                                found = false;
+
+                            }
+
+                            else if (int.TryParse(flightCode, out int result))
+                            {
+                                Console.WriteLine("Invalid input! Please enter a string");
+                            }
+                            else
+                            {
+                                found = true;
+                                //flight_Code[i] = flightCode;
+                                flight_Code1.Add(flightCode);
+                                break;
+                            }
+                        } while (!found);
+
+                        do
+                        {
+                            Console.WriteLine("Enter From City : ");
+                            from_City[i] = Console.ReadLine();
+                            fromCity = from_City[i].ToString();
+                            if (string.IsNullOrWhiteSpace(fromCity))
+                            {
+                                Console.WriteLine("From City cannot be empty. Please try again.");
+                                found = false;
+                            }
+                            else if (int.TryParse(fromCity, out int result))
+                            {
+                                Console.WriteLine("Invalid input! Please enter a string");
+                                found = false;
+                            }
+
+                            else
+                            {
+                                found = true;
+                                //from_City[i] = fromCity;
+                                from_City1.Add(fromCity);
+                                break;
+                            }
+                        } while (!found);
+
+
+                        do
+                        {
+                            Console.WriteLine("Enter To City : ");
+                            to_City[i] = Console.ReadLine();
+                            toCity = to_City[i].ToString();
+                            if (string.IsNullOrWhiteSpace(toCity))
+                            {
+                                Console.WriteLine("From City cannot be empty. Please try again.");
+                                found = false;
+                            }
+                            else if (int.TryParse(toCity, out int result))
+                            {
+                                Console.WriteLine("Invalid input! Please enter a string");
+                                found = false;
+                            }
+
+                            else
+                            {
+                                found = true;
+                               // to_City[i] = toCity;
+                                to_City1.Add(toCity);
+                                break;
+                            }
+                        } while (!found);
+
+
+
+                        do
+                        {
+                            Console.WriteLine("Enter Flight Duration : ");
+                            flight_duration[i] = int.Parse(Console.ReadLine());
+
+
+
+                            duration = flight_duration[i];
+                            if (flight_duration[i] < 0)
+                            {
+                                Console.WriteLine("Flight duration cannot be negative. Please try again.");
+                                found = false;
+                            }
+
+                            else
+                            {
+                                //flight_duration[i] = duration;
+                                flight_duration1.Add(duration);
+                                found = true;
+                                break;
+                            }
+                        } while (!found);
+
+
+                        do
+                        {
+                            Console.WriteLine("Enter Departure Time (yy-mm-dd hh:mm): ");
+                            departure_Time[i] = DateTime.Parse(Console.ReadLine());
+                            departureTime = departure_Time[i];
+                            if (departure_Time[i] == null)
+                            {
+                                Console.WriteLine("Departure time cannot be empty. Please try again.");
+                            }
+                            else if (int.TryParse(departure_Time[i].ToString(), out int result))
+                            {
+                                Console.WriteLine("Invalid input! Please enter a valid date and time");
+                            }
+                            else
+                            {
+                                found = true;
+                                //departure_Time[i] = departureTime;
+                                departure_Time1.Add(departureTime);
+                                break;
+                            }
+
+                        } while (!found);
+
+                        do
+                        {
+                            Console.WriteLine("Enter base Price : ");
+                            base_Price[i] = int.Parse(Console.ReadLine());
+                            basePrice = base_Price[i];
+                            if (base_Price[i] < 0)
+                            {
+                                Console.WriteLine("Base price cannot be negative. Please try again.");
+                                found = false;
+                            }
+                            else
+                            {
+                                //base_Price[i] = basePrice;
+                                base_Price1.Add(basePrice);
+                                found = true;
+                                break;
+                            }
+
+
+                        } while (!found);
+
+
+
+
+                        Console.WriteLine("Flight Added Successfully .");
+                    }
+
+                    FlightCounter = FlightCounter + numberOfFlight;
+                }
+
+                else if (FlightCounter == maxFlight)
+                {
+                    Console.WriteLine("Maximum number of flight reached. No more flight can be added.");
+                }
+                else
+                {
+                    Console.WriteLine($"Invalid input . the remaining space is {maxFlight - FlightCounter}");
+
+
+                }
+
+                Console.WriteLine("\n Do you want to add more flight? (y/n) \n");
+                doAgain = Console.ReadKey().KeyChar;
+
+            } while (doAgain == 'y' || doAgain == 'Y');
+
+            Console.Clear();
+
+            StartSystem();
+
+
+
+        }
+
+
         // Display all flights
         public static void DisplayAllFlights()
         {
@@ -381,7 +585,7 @@ namespace AirlineReservationConsoleSystem
                 Console.WriteLine("Displaying all flights:");
                 for (int i = 0; i < FlightCounter; i++)
                 {
-                    Console.WriteLine("Flight Code : " + flight_Code[i]);
+                    Console.WriteLine("Flight Code : " + flight_Code1[i]);
                     Console.WriteLine("From City : " + from_City[i]);
                     Console.WriteLine("To City : " + to_City[i]);
                     Console.WriteLine("Departure Time : " + departure_Time[i]);
@@ -492,7 +696,8 @@ namespace AirlineReservationConsoleSystem
                     else
                     {
                         // Update the departure time
-                        departure_Time[i] = newDeparture;
+                        //departure_Time[i] = newDeparture;
+                        departure_Time1.Add(newDeparture);
                         Console.WriteLine("Departure time updated successfully.");
                         departure = newDeparture;
                         found = true;
@@ -534,8 +739,10 @@ namespace AirlineReservationConsoleSystem
                 {
                     // Cancel the booking
                     passengerName = passenger_Name[i];
-                    passenger_Name[i] = "";
-                    booking_Id[i] = "";
+                    //passenger_Name[i] = "";
+                    passenger_Name1.Add("");
+                    //booking_Id[i] = "";
+                    booking_Id1.Add("");
                     Console.WriteLine($"Booking for {passengerName} has been canceled.");
                     return passengerName;
                 }
@@ -596,10 +803,16 @@ namespace AirlineReservationConsoleSystem
 
                             // book the flight
                             maxSeats = maxSeats - numTickets;
-                            passenger_Name[i] = passengerName;
-                            booking_Id[i] = GenerateBookingID(passengerName);
-                            num_Tickets[i] = numTickets;
-                            total_Fare[i] = totalFare;
+                            //passenger_Name[i] = passengerName;
+                            //booking_Id[i] = GenerateBookingID(passengerName);
+                            //num_Tickets[i] = numTickets;
+                            //total_Fare[i] = totalFare;
+
+                            passenger_Name1.Add(passengerName);
+                            booking_Id1.Add(GenerateBookingID(passengerName));
+                            num_Tickets1.Add(numTickets);
+                            total_Fare1.Add(totalFare);
+                            
 
 
                         }
@@ -709,6 +922,8 @@ namespace AirlineReservationConsoleSystem
             bool found = false;
 
             Console.WriteLine("Searching bookings for destination: " + toCity); 
+
+            
             for (int i = 0; i < FlightCounter; i++)
             {
                 if (to_City[i].ToLower() == toCity.ToLower())
